@@ -1,24 +1,26 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Paper,
   Table,
-  TableBody,
   TableContainer,
   TableFooter,
   TableHead,
   TablePagination,
-  TableRow,
 } from "@mui/material";
 import { AlphaTableCell } from "../alpha-table-cell/alpha-table-cell";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { AlphaTableSkeleton } from "../alpha-table-skeleton/alpha-table-skeleton";
+import { AlphaButton } from "../alpha-button/alpha-button";
+import { AlphaTableBody } from "../alpha-table-body/alpha-table-body";
+import { AlphaTableRow } from "../alpha-table-row/alpha-table-row";
+
+const ROWS_PER_PAGE = 10;
 
 export function AlphaTable() {
   const headers = ["Name", "Gender", "Height", "Eye color"];
 
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,7 +33,6 @@ export function AlphaTable() {
       .get(`https://swapi.dev/api/people/?page=${pageNumber}`)
       .then((res) => {
         setData(res.data);
-        setRowsPerPage(res.data?.results.length);
         setIsLoading(false);
       });
   };
@@ -43,58 +44,47 @@ export function AlphaTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: 700 }}>
         <TableHead>
-          <TableRow>
+          <AlphaTableRow>
             {headers.map((item) => (
-              <AlphaTableCell key={item}>{item}</AlphaTableCell>
+              <AlphaTableCell key={item} width={item === "Name" ? "30%" : ""}>
+                {item}
+              </AlphaTableCell>
             ))}
-          </TableRow>
+            <AlphaTableCell key="action"></AlphaTableCell>
+          </AlphaTableRow>
         </TableHead>
         {!isLoading ? (
-          <TableBody>
+          <AlphaTableBody>
             {data.results &&
               data.results.map((row) => {
-                // const Id = useId();
                 return (
-                  <TableRow>
+                  <AlphaTableRow>
                     <AlphaTableCell>{row.name}</AlphaTableCell>
                     <AlphaTableCell>{row.gender}</AlphaTableCell>
                     <AlphaTableCell>{row.height}</AlphaTableCell>
                     <AlphaTableCell>{row["eye_color"]}</AlphaTableCell>
-                    {/* <StyledTableCell component="th" scope="row">
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
-                  </TableRow>
+                    <AlphaTableCell>
+                      <AlphaButton size="small">details</AlphaButton>
+                    </AlphaTableCell>
+                  </AlphaTableRow>
                 );
               })}
-          </TableBody>
+          </AlphaTableBody>
         ) : (
           <AlphaTableSkeleton />
         )}
         <TableFooter>
-          <TableRow>
+          <AlphaTableRow>
             <TablePagination
-              colSpan={3}
-              count={data.count}
-              rowsPerPage={rowsPerPage}
+              count={data.count ?? ROWS_PER_PAGE}
+              rowsPerPage={ROWS_PER_PAGE}
               page={page}
-              slotProps={{
-                select: {
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                },
-              }}
               onPageChange={handleChangePage}
-              // onRowsPerPageChange={handleChangeRowsPerPage}
-              // ActionsComponent={TablePaginationActions}
+              rowsPerPageOptions={[10]}
             />
-          </TableRow>
+          </AlphaTableRow>
         </TableFooter>
       </Table>
     </TableContainer>
