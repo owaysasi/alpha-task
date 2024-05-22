@@ -25,11 +25,12 @@ export function AlphaTable({ searchText }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getData();
+    getData(1, () => setPage(0));
   }, [searchText]);
 
-  const getData = (pageNumber: number = 1) => {
+  const getData = (pageNumber: number = 1, callBack: () => {}) => {
     setIsLoading(true);
+    callBack();
     axios
       .get(
         `https://swapi.dev/api/people/?page=${pageNumber}&search=${
@@ -43,8 +44,7 @@ export function AlphaTable({ searchText }) {
   };
 
   const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage);
-    getData(newPage + 1);
+    getData(newPage + 1, () => setPage(newPage));
   };
 
   return (
