@@ -77,7 +77,7 @@ export function AlphaTable({ searchText }) {
                 );
               })
             ) : (
-              <AlphaNoData />
+              <AlphaNoData message="No Data To Show" />
             )}
           </AlphaTableBody>
         ) : (
