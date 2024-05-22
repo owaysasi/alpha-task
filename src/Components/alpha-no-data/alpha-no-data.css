@@ -1,5 +1,5 @@
 .no-data {
-  display: flex;
-  text-align: center;
-  height: 500;
+  position: absolute;
+  left: 33%;
+  top: 53%;
 }
