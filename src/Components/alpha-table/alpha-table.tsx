@@ -13,10 +13,11 @@ import { AlphaTableSkeleton } from "../alpha-table-skeleton/alpha-table-skeleton
 import { AlphaButton } from "../alpha-button/alpha-button";
 import { AlphaTableBody } from "../alpha-table-body/alpha-table-body";
 import { AlphaTableRow } from "../alpha-table-row/alpha-table-row";
+import { AlphaNoData } from "../alpha-no-data/alpha-no-data";
 
 const ROWS_PER_PAGE = 10;
 
-export function AlphaTable() {
+export function AlphaTable({ searchText }) {
   const headers = ["Name", "Gender", "Height", "Eye color"];
 
   const [data, setData] = useState([]);
@@ -25,12 +26,16 @@ export function AlphaTable() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchText]);
 
   const getData = (pageNumber: number = 1) => {
     setIsLoading(true);
     axios
-      .get(`https://swapi.dev/api/people/?page=${pageNumber}`)
+      .get(
+        `https://swapi.dev/api/people/?page=${pageNumber}&search=${
+          searchText ?? ""
+        }`
+      )
       .then((res) => {
         setData(res.data);
         setIsLoading(false);
@@ -57,7 +62,7 @@ export function AlphaTable() {
         </TableHead>
         {!isLoading ? (
           <AlphaTableBody>
-            {data.results &&
+            {data.results.length > 0 ? (
               data.results.map((row) => {
                 return (
                   <AlphaTableRow>
@@ -70,7 +75,10 @@ export function AlphaTable() {
                     </AlphaTableCell>
                   </AlphaTableRow>
                 );
-              })}
+              })
+            ) : (
+              <AlphaNoData message="No Data To Show" />
+            )}
           </AlphaTableBody>
         ) : (
           <AlphaTableSkeleton />
