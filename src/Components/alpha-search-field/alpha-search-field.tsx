@@ -1,7 +1,7 @@
 import { Grid, TextField, Typography } from "@mui/material";
 import _ from "lodash";
 
-const DEBOUNCED_PERIOD = 1000;
+const DEBOUNCED_PERIOD = 500;
 
 export function AlphaSearchField({ setSearchText }) {
   const onSearchChange = (event) => {
