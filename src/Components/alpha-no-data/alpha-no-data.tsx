@@ -1,10 +1,18 @@
+//MUI
 import { Typography } from "@mui/material";
-import "./alpha-no-data.css";
 
-export function AlphaNoData({ message }) {
+//Style
+import "./alpha-no-data.css";
+import { ReactNode } from "react";
+
+interface Props {
+  children: ReactNode;
+}
+
+export function AlphaNoData({ children }: Props) {
   return (
     <div className="no-data">
-      <Typography variant="h3">{message}</Typography>
+      <Typography variant="h3">{children}</Typography>
     </div>
   );
 }

@@ -1,5 +1,10 @@
+//React
 import { useEffect, useState } from "react";
+
+//Axios
 import axios from "axios";
+
+//MUI
 import {
   Paper,
   Table,
@@ -8,17 +13,29 @@ import {
   TableHead,
   TablePagination,
 } from "@mui/material";
+
+//Core components
 import { AlphaTableCell } from "../alpha-table-cell/alpha-table-cell";
 import { AlphaTableSkeleton } from "../alpha-table-skeleton/alpha-table-skeleton";
 import { AlphaButton } from "../alpha-button/alpha-button";
 import { AlphaTableBody } from "../alpha-table-body/alpha-table-body";
 import { AlphaTableRow } from "../alpha-table-row/alpha-table-row";
 import { AlphaNoData } from "../alpha-no-data/alpha-no-data";
+
+//Routing
 import { useNavigate } from "react-router-dom";
 
-const ROWS_PER_PAGE = 10;
+//ID generator
+import { v4 as uuid } from "uuid";
 
-export function AlphaTable({ searchText }) {
+//Const
+import { ROWS_PER_PAGE } from "../../const/const";
+
+interface Props {
+  searchText?: string;
+}
+
+export function AlphaTable({ searchText }: Props) {
   const headers = ["Name", "Gender", "Height", "Eye color"];
 
   const [data, setData] = useState([]);
@@ -67,8 +84,9 @@ export function AlphaTable({ searchText }) {
           <AlphaTableBody>
             {data.results.length > 0 ? (
               data.results.map((row) => {
+                const unique_id = uuid();
                 return (
-                  <AlphaTableRow>
+                  <AlphaTableRow key={unique_id}>
                     <AlphaTableCell>{row.name}</AlphaTableCell>
                     <AlphaTableCell>{row.gender}</AlphaTableCell>
                     <AlphaTableCell>{row.height}</AlphaTableCell>
@@ -84,9 +102,9 @@ export function AlphaTable({ searchText }) {
                   </AlphaTableRow>
                 );
               })
-            ) : (
-              <AlphaNoData message="No Data To Show" />
-            )}
+            ) : data.results.length === 0 ? (
+              <AlphaNoData>No Data To Show</AlphaNoData>
+            ) : null}
           </AlphaTableBody>
         ) : (
           <AlphaTableSkeleton />

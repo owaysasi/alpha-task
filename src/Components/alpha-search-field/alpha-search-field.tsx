@@ -1,15 +1,17 @@
 import { Grid, TextField, Typography } from "@mui/material";
 import _ from "lodash";
+import { DEBOUNCED_PERIOD } from "../../const/const";
 
-const DEBOUNCED_PERIOD = 500;
+interface Props {
+  setSearchText: () => void;
+}
 
-export function AlphaSearchField({ setSearchText }) {
+export function AlphaSearchField({ setSearchText }: Props) {
   const onSearchChange = (event) => {
     onSearchDebounced(event.target.value);
   };
 
   const onSearchDebounced = _.debounce((text) => {
-    console.log(text, "text");
     setSearchText(text);
   }, DEBOUNCED_PERIOD);
 

@@ -1,8 +1,23 @@
+//MUI
 import { TextField } from "@mui/material";
-import { useController } from "react-hook-form";
-import PropTypes from "prop-types";
 
-export function AlphaInput(props) {
+//Form
+import { useController } from "react-hook-form";
+
+interface Props {
+  children?: ReactNode;
+  pattern?: string;
+  required?: object;
+  select?: boolean;
+  type?: string;
+  size?: string;
+  label?: string;
+  name: string;
+  style?: object;
+  control: object;
+}
+
+export function AlphaInput(props: Props) {
   const {
     control,
     name,
@@ -42,16 +57,3 @@ export function AlphaInput(props) {
     </TextField>
   );
 }
-
-AlphaInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  control: PropTypes.object.isRequired,
-  required: PropTypes.object,
-  style: PropTypes.object,
-  pattern: PropTypes.string,
-  label: PropTypes.string,
-  type: PropTypes.string,
-  select: PropTypes.bool,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-  children: PropTypes.node,
-};

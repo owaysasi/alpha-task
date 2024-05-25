@@ -10,12 +10,9 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 //Form
 import { Controller, Form, useForm, useFieldArray } from "react-hook-form";
-import "dayjs/locale/en-gb";
 
 //Core components
 import { AlphaButton } from "../../Components/alpha-button/alpha-button";
@@ -25,18 +22,12 @@ import { AlphaFormControlLabel } from "../../Components/alpha-form-control-label
 //Routing
 import { useNavigate } from "react-router-dom";
 
-const disorderList = [
-  { name: "PD", Id: 1 },
-  { name: "ET", Id: 2 },
-  { name: "Dyst_G", Id: 3 },
-  { name: "Dyst_NG", Id: 4 },
-  { name: "OCD", Id: 5 },
-  { name: "Tourette", Id: 6 },
-  { name: "Epilepsy", Id: 7 },
-  { name: "Other", Id: 8 },
-];
-
-const workspaceOptions = ["option1", "option2", "option3"];
+//Const
+import {
+  defaultValues,
+  disorderList,
+  workspaceOptions,
+} from "../../const/const";
 
 interface FormInput {
   firstName: string;
@@ -46,15 +37,6 @@ interface FormInput {
   gender: string;
   workspaces: { value: string }[];
 }
-
-const defaultValues = {
-  firstName: "",
-  lastName: "",
-  dateOfBirth: "1999-12-31",
-  disorder: [],
-  gender: "",
-  workspaces: [{ value: "" }],
-};
 
 export function UserDetailsPage() {
   const {
@@ -174,191 +156,189 @@ export function UserDetailsPage() {
         }}
         control={control}
       >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Grid container direction="column" spacing={4}>
-            <Grid
-              item
-              container
-              direction="row"
-              spacing={2}
-              justifyContent="flex-start"
-            >
-              <Grid item>
-                <AlphaInput
-                  name="firstName"
-                  control={control}
-                  size="small"
-                  label="First Name"
-                  required={{
-                    value: true,
-                    message: "Please, enter first name",
-                  }}
-                  // {...field}
-                />
-              </Grid>
-              <Grid item>
-                <AlphaInput
-                  control={control}
-                  name="lastName"
-                  size="small"
-                  label="Last Name"
-                  required={{ value: true, message: "Please, enter last name" }}
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              direction="column"
-              container
-              marginLeft={1.5}
-              alignItems="flex-start"
-            >
-              <Grid item>
-                <Typography>Gender *</Typography>
-              </Grid>
-              <Grid item>
-                <Controller
-                  name="gender"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => {
-                    return (
-                      <>
-                        <RadioGroup {...field}>
-                          <Grid container>
-                            <Grid item>
-                              <AlphaFormControlLabel
-                                value="male"
-                                control={
-                                  <Radio
-                                    color={
-                                      "gender" in errors ? "primary" : "default"
-                                    }
-                                    disableRipple
-                                  />
-                                }
-                                label="Male"
-                              />
-                            </Grid>
-                            <Grid item>
-                              <AlphaFormControlLabel
-                                value="female"
-                                control={<Radio disableRipple />}
-                                label="Female"
-                              />
-                            </Grid>
-                          </Grid>
-                        </RadioGroup>
-
-                        {"gender" in errors && (
-                          <Typography color="error" fontSize={12}>
-                            Please, select a gender
-                          </Typography>
-                        )}
-                      </>
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container direction="column" spacing={4}>
+          <Grid
+            item
+            container
+            direction="row"
+            spacing={2}
+            justifyContent="flex-start"
+          >
+            <Grid item>
+              <AlphaInput
+                name="firstName"
+                control={control}
+                size="small"
+                label="First Name"
+                required={{
+                  value: true,
+                  message: "Please, enter first name",
+                }}
+                // {...field}
+              />
             </Grid>
             <Grid item>
               <AlphaInput
-                name="dateOfBirth"
                 control={control}
-                type="date"
-                label="Date of birth"
-                required={{ value: true }}
+                name="lastName"
+                size="small"
+                label="Last Name"
+                required={{ value: true, message: "Please, enter last name" }}
               />
             </Grid>
-            <Grid
-              item
-              container
-              direction="column"
-              alignItems="flex-start"
-              marginLeft={1.5}
-            >
-              <Grid item>
-                <Typography>Disorder *</Typography>
-              </Grid>
-              <Grid item>
-                <Controller
-                  control={control}
-                  rules={{ required: true }}
-                  name="disorder"
-                  render={({ field }) => MemoizedCheckbox(field)}
-                />
-                {"disorder" in errors && (
-                  <Grid item>
-                    <Typography color="error" fontSize={12}>
-                      Please, select at least one disorder
-                    </Typography>
-                  </Grid>
-                )}
-              </Grid>
+          </Grid>
+          <Grid
+            item
+            direction="column"
+            container
+            marginLeft={1.5}
+            alignItems="flex-start"
+          >
+            <Grid item>
+              <Typography>Gender *</Typography>
             </Grid>
-            <Grid
-              item
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              {fields.map((field, index) => (
-                <Grid item key={field.id}>
-                  <AlphaInput
-                    name={`workspaces.${index}.value`}
-                    select
-                    control={control}
-                    size="small"
-                    label="Workspace template"
-                    style={{ minWidth: 200 }}
-                    required={{
-                      value: true,
-                    }}
-                  >
-                    {workspaceOptions.map((item) => (
-                      <MenuItem value={item} key={item}>
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </AlphaInput>
-                  {`workspaces` in errors && (
-                    <Typography
-                      position="absolute"
-                      marginLeft={1.5}
-                      color="error"
-                      fontSize={12}
-                    >
-                      Please, select an option
-                    </Typography>
-                  )}
-                </Grid>
-              ))}
-              <Grid item>
-                <AlphaButton
-                  variant="outlined"
-                  disableRipple
-                  size="medium"
-                  onClick={() => append({ value: "" })}
-                >
-                  Add workspace
-                </AlphaButton>
-              </Grid>
-            </Grid>
-            <Grid item container>
-              <Grid item xs={4} sm={2}>
-                <AlphaButton variant="contained" type="submit" disableRipple>
-                  Save
-                </AlphaButton>
-              </Grid>
-              <Grid item xs={4} sm={2}>
-                <AlphaButton disableRipple onClick={() => navigate("/")}>
-                  Cancel
-                </AlphaButton>
-              </Grid>
+            <Grid item>
+              <Controller
+                name="gender"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => {
+                  return (
+                    <>
+                      <RadioGroup {...field}>
+                        <Grid container>
+                          <Grid item>
+                            <AlphaFormControlLabel
+                              value="male"
+                              control={
+                                <Radio
+                                  color={
+                                    "gender" in errors ? "primary" : "default"
+                                  }
+                                  disableRipple
+                                />
+                              }
+                              label="Male"
+                            />
+                          </Grid>
+                          <Grid item>
+                            <AlphaFormControlLabel
+                              value="female"
+                              control={<Radio disableRipple />}
+                              label="Female"
+                            />
+                          </Grid>
+                        </Grid>
+                      </RadioGroup>
+
+                      {"gender" in errors && (
+                        <Typography color="error" fontSize={12}>
+                          Please, select a gender
+                        </Typography>
+                      )}
+                    </>
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        </LocalizationProvider>
+          <Grid item>
+            <AlphaInput
+              name="dateOfBirth"
+              control={control}
+              type="date"
+              label="Date of birth"
+              required={{ value: true }}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            direction="column"
+            alignItems="flex-start"
+            marginLeft={1.5}
+          >
+            <Grid item>
+              <Typography>Disorder *</Typography>
+            </Grid>
+            <Grid item>
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                name="disorder"
+                render={({ field }) => MemoizedCheckbox(field)}
+              />
+              {"disorder" in errors && (
+                <Grid item>
+                  <Typography color="error" fontSize={12}>
+                    Please, select at least one disorder
+                  </Typography>
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            container
+            spacing={2}
+            alignItems="center"
+            justifyContent="flex-start"
+          >
+            {fields.map((field, index) => (
+              <Grid item key={field.id}>
+                <AlphaInput
+                  name={`workspaces.${index}.value`}
+                  select
+                  control={control}
+                  size="small"
+                  label="Workspace template"
+                  style={{ minWidth: 200 }}
+                  required={{
+                    value: true,
+                  }}
+                >
+                  {workspaceOptions.map((item) => (
+                    <MenuItem value={item} key={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </AlphaInput>
+                {`workspaces` in errors && (
+                  <Typography
+                    position="absolute"
+                    marginLeft={1.5}
+                    color="error"
+                    fontSize={12}
+                  >
+                    Please, select an option
+                  </Typography>
+                )}
+              </Grid>
+            ))}
+            <Grid item>
+              <AlphaButton
+                variant="outlined"
+                disableRipple
+                size="medium"
+                onClick={() => append({ value: "" })}
+              >
+                Add workspace
+              </AlphaButton>
+            </Grid>
+          </Grid>
+          <Grid item container>
+            <Grid item xs={4} sm={2}>
+              <AlphaButton variant="contained" type="submit" disableRipple>
+                Save
+              </AlphaButton>
+            </Grid>
+            <Grid item xs={4} sm={2}>
+              <AlphaButton disableRipple onClick={() => navigate("/")}>
+                Cancel
+              </AlphaButton>
+            </Grid>
+          </Grid>
+        </Grid>
       </Form>
     </div>
   );

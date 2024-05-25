@@ -1,6 +1,9 @@
-import { useId } from "react";
+import { ReactNode } from "react";
 import { TableCell, tableCellClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+//ID Generator
+import { v4 as uuid } from "uuid";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -14,10 +17,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export function AlphaTableCell({ children, ...restProps }) {
-  const Id = useId();
+interface Props {
+  children: ReactNode;
+  className?: string;
+  width?: number;
+  height?: number;
+}
+
+export function AlphaTableCell({ children, ...restProps }: Props) {
+  const unique_id = uuid();
   return (
-    <StyledTableCell key={Id} {...restProps}>
+    <StyledTableCell key={unique_id} {...restProps}>
       {children}
     </StyledTableCell>
   );
