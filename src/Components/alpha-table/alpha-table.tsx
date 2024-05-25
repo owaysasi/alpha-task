@@ -14,6 +14,7 @@ import { AlphaButton } from "../alpha-button/alpha-button";
 import { AlphaTableBody } from "../alpha-table-body/alpha-table-body";
 import { AlphaTableRow } from "../alpha-table-row/alpha-table-row";
 import { AlphaNoData } from "../alpha-no-data/alpha-no-data";
+import { useNavigate } from "react-router-dom";
 
 const ROWS_PER_PAGE = 10;
 
@@ -23,6 +24,8 @@ export function AlphaTable({ searchText }) {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData(1, () => setPage(0));
@@ -71,7 +74,12 @@ export function AlphaTable({ searchText }) {
                     <AlphaTableCell>{row.height}</AlphaTableCell>
                     <AlphaTableCell>{row["eye_color"]}</AlphaTableCell>
                     <AlphaTableCell>
-                      <AlphaButton size="small">details</AlphaButton>
+                      <AlphaButton
+                        size="small"
+                        onClick={() => navigate("/add_patient")}
+                      >
+                        details
+                      </AlphaButton>
                     </AlphaTableCell>
                   </AlphaTableRow>
                 );
