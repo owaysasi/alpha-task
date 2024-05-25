@@ -1,6 +1,7 @@
 //MUI
 import { TableRow, tableRowClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
 import { ReactNode } from "react";
 
 const StyledAlphaTableRow = styled(TableRow)(() => ({
