@@ -1,14 +1,20 @@
+//MUI
 import { Typography } from "@mui/material";
+
+//Core components
 import { AlphaTable } from "../../Components/alpha-table/alpha-table";
 import { AlphaSearchField } from "../../Components/alpha-search-field/alpha-search-field";
+
+//Style
+import "./star-war-page.css";
+
+//Hooks
 import { useState } from "react";
 
 export function StarWarPage() {
   const [searchText, setSearchText] = useState("");
   return (
-    <div
-      style={{ alignItems: "left", display: "flex", flexDirection: "column" }}
-    >
+    <div className="star-war-page-container">
       <Typography textAlign="left" variant="h4">
         Star War
       </Typography>

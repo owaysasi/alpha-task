@@ -1,7 +1,8 @@
 //MUI
 import { Button, buttonClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import PropTypes from "prop-types";
+
+import { ReactNode } from "react";
 
 const StyledAlphaButton = styled(Button)(() => ({
   [`&.${buttonClasses.sizeSmall}`]: {
@@ -16,15 +17,15 @@ const StyledAlphaButton = styled(Button)(() => ({
   },
 }));
 
-export function AlphaButton({ children, ...restProps }) {
-  return <StyledAlphaButton {...restProps}>{children}</StyledAlphaButton>;
+interface Props {
+  children: ReactNode;
+  type?: string;
+  size?: string;
+  variant?: string;
+  disableRipple?: boolean;
+  onClick?: () => void;
 }
 
-AlphaButton.propTypes = {
-  type: PropTypes.string,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-  variant: PropTypes.oneOf(["contained", "outlined"]),
-  children: PropTypes.node,
-  disableRipple: PropTypes.bool,
-  onClick: PropTypes.func,
-};
+export function AlphaButton({ children, ...restProps }: Props) {
+  return <StyledAlphaButton {...restProps}>{children}</StyledAlphaButton>;
+}

@@ -1,0 +1,5 @@
+.star-war-page-container {
+  align-items: "left";
+  display: "flex";
+  flex-direction: "column";
+}

@@ -1,5 +1,6 @@
 import { TableBody, tableBodyClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { ReactNode } from "react";
 
 const StyledAlphaTableBody = styled(TableBody)(() => ({
   [`&.${tableBodyClasses.root}`]: {
@@ -7,6 +8,10 @@ const StyledAlphaTableBody = styled(TableBody)(() => ({
   },
 }));
 
-export function AlphaTableBody({ children, ...restProps }) {
+interface Props {
+  children: ReactNode;
+}
+
+export function AlphaTableBody({ children, ...restProps }: Props) {
   return <StyledAlphaTableBody {...restProps}>{children}</StyledAlphaTableBody>;
 }

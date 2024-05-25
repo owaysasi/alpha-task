@@ -1,7 +1,8 @@
 //MUI
 import { FormControlLabel } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import PropTypes from "prop-types";
+
+import { ReactNode } from "react";
 
 const StyledAlphaFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`, // Border color from theme
@@ -9,12 +10,12 @@ const StyledAlphaFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   paddingRight: 4,
 }));
 
-export function AlphaFormControlLabel(props: object) {
-  return <StyledAlphaFormControlLabel {...props} />;
+interface Props {
+  value: string;
+  label: string;
+  control: ReactNode;
 }
 
-AlphaFormControlLabel.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string,
-  control: PropTypes.node,
-};
+export function AlphaFormControlLabel(props: Props) {
+  return <StyledAlphaFormControlLabel {...props} />;
+}
