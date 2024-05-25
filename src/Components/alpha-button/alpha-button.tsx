@@ -1,9 +1,15 @@
 //MUI
-import { Button } from "@mui/material";
+import { Button, buttonClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
 
 const StyledAlphaButton = styled(Button)(() => ({
+  [`&.${buttonClasses.sizeSmall}`]: {
+    // textTransform: "capitalize",
+    padding: 0,
+    lineHeight: 0,
+    minWidth: "auto",
+  },
   textTransform: "capitalize",
   "&:focus": {
     outline: "none",
