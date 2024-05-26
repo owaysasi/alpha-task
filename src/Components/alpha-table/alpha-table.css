@@ -1,0 +1,8 @@
+.table-container {
+  overflow: auto;
+}
+.table-sub-container {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}

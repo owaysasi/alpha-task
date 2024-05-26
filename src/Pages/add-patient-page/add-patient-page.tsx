@@ -113,7 +113,6 @@ export function UserDetailsPage() {
   };
 
   const formDataFormatter = (data: FormInput) => {
-    console.log(data, "data");
     setFormData("");
     let formattedData: string = "";
     Object.keys(data).forEach((key) => {
@@ -132,7 +131,6 @@ export function UserDetailsPage() {
           )}, `;
           break;
         default:
-          console.log(data[key as keyof FormInput], "key");
           formattedData += `${key}: ${data[key as keyof FormInput]}, `;
           break;
       }

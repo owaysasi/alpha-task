@@ -31,6 +31,9 @@ import { v4 as uuid } from "uuid";
 //Const
 import { ROWS_PER_PAGE } from "../../const/const";
 
+//Style
+import "./alpha-table.css";
+
 interface Props {
   searchText?: string;
 }
@@ -73,7 +76,6 @@ export function AlphaTable({ searchText }: Props) {
         }`
       )
       .then((res) => {
-        console.log(res.data, "data");
         setData(res.data);
         setIsLoading(false);
       });
@@ -85,58 +87,65 @@ export function AlphaTable({ searchText }: Props) {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }}>
-        <TableHead>
-          <AlphaTableRow>
-            {headers.map((item) => (
-              <AlphaTableCell key={item} width={item === "Name" ? "30%" : ""}>
-                {item}
-              </AlphaTableCell>
-            ))}
-            <AlphaTableCell key="action"></AlphaTableCell>
-          </AlphaTableRow>
-        </TableHead>
-        {!isLoading ? (
-          <AlphaTableBody>
-            {data && data.results.length > 0 ? (
-              data.results.map((row: RowData) => {
-                const unique_id = uuid();
-                return (
-                  <AlphaTableRow key={unique_id}>
-                    <AlphaTableCell>{row.name}</AlphaTableCell>
-                    <AlphaTableCell>{row.gender}</AlphaTableCell>
-                    <AlphaTableCell>{row.height}</AlphaTableCell>
-                    <AlphaTableCell>{row["eye_color"]}</AlphaTableCell>
-                    <AlphaTableCell>
-                      <AlphaButton
-                        size="small"
-                        onClick={() => navigate("/alpha-task/add_patient")}
-                      >
-                        details
-                      </AlphaButton>
-                    </AlphaTableCell>
-                  </AlphaTableRow>
-                );
-              })
-            ) : data && data.results.length === 0 ? (
-              <AlphaNoData>No Data To Show</AlphaNoData>
-            ) : null}
-          </AlphaTableBody>
-        ) : (
-          <AlphaTableSkeleton />
-        )}
-        <TableFooter>
-          <AlphaTableRow>
-            <TablePagination
-              count={(data && data.count) ?? ROWS_PER_PAGE}
-              rowsPerPage={ROWS_PER_PAGE}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPageOptions={[10]}
-            />
-          </AlphaTableRow>
-        </TableFooter>
-      </Table>
+      <div className="table-container">
+        <div className="table-sub-container">
+          <Table>
+            <TableHead>
+              <AlphaTableRow>
+                {headers.map((item) => (
+                  <AlphaTableCell
+                    key={item}
+                    width={item === "Name" ? "30%" : ""}
+                  >
+                    {item}
+                  </AlphaTableCell>
+                ))}
+                <AlphaTableCell key="action"></AlphaTableCell>
+              </AlphaTableRow>
+            </TableHead>
+            {!isLoading ? (
+              <AlphaTableBody>
+                {data && data.results.length > 0 ? (
+                  data.results.map((row: RowData) => {
+                    const unique_id = uuid();
+                    return (
+                      <AlphaTableRow key={unique_id}>
+                        <AlphaTableCell>{row.name}</AlphaTableCell>
+                        <AlphaTableCell>{row.gender}</AlphaTableCell>
+                        <AlphaTableCell>{row.height}</AlphaTableCell>
+                        <AlphaTableCell>{row["eye_color"]}</AlphaTableCell>
+                        <AlphaTableCell>
+                          <AlphaButton
+                            size="small"
+                            onClick={() => navigate("/alpha-task/add_patient")}
+                          >
+                            details
+                          </AlphaButton>
+                        </AlphaTableCell>
+                      </AlphaTableRow>
+                    );
+                  })
+                ) : data && data.results.length === 0 ? (
+                  <AlphaNoData>No Data To Show</AlphaNoData>
+                ) : null}
+              </AlphaTableBody>
+            ) : (
+              <AlphaTableSkeleton />
+            )}
+            <TableFooter>
+              <AlphaTableRow>
+                <TablePagination
+                  count={(data && data.count) ?? ROWS_PER_PAGE}
+                  rowsPerPage={ROWS_PER_PAGE}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPageOptions={[10]}
+                />
+              </AlphaTableRow>
+            </TableFooter>
+          </Table>
+        </div>
+      </div>
     </TableContainer>
   );
 }
