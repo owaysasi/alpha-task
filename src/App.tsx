@@ -26,11 +26,11 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/alpha-task/",
       element: <StarWarPage />,
     },
     {
-      path: "/add_patient",
+      path: "/alpha-task/add_patient",
       element: <UserDetailsPage />,
     },
   ]);
