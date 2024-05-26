@@ -110,7 +110,7 @@ export function AlphaTable({ searchText }: Props) {
                     <AlphaTableCell>
                       <AlphaButton
                         size="small"
-                        onClick={() => navigate("/add_patient")}
+                        onClick={() => navigate("/alpha-task/add_patient")}
                       >
                         details
                       </AlphaButton>

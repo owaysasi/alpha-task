@@ -341,7 +341,10 @@ export function UserDetailsPage() {
               </AlphaButton>
             </Grid>
             <Grid item xs={4} sm={2}>
-              <AlphaButton disableRipple onClick={() => navigate("/")}>
+              <AlphaButton
+                disableRipple
+                onClick={() => navigate("/alpha-task/")}
+              >
                 Cancel
               </AlphaButton>
             </Grid>
