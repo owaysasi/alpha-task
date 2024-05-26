@@ -1,33 +1,30 @@
 //MUI
 import { TextField } from "@mui/material";
+import { ReactNode } from "react";
 
 //Form
-import { useController } from "react-hook-form";
+import { Control, UseControllerProps, useController } from "react-hook-form";
+import { FormInput, Message, Name, Size } from "../../types/types";
 
 interface Props {
   children?: ReactNode;
-  pattern?: string;
-  required?: object;
+  required?: Required;
   select?: boolean;
   type?: string;
-  size?: string;
+  size?: Size;
   label?: string;
-  name: string;
+  name: Name;
   style?: object;
-  control: object;
+  control: Control<FormInput>;
 }
 
-export function AlphaInput(props: Props) {
-  const {
-    control,
-    name,
-    type,
-    size,
-    required,
-    pattern,
-    children,
-    ...restProps
-  } = props;
+interface Required {
+  value: boolean;
+  message?: Message;
+}
+
+export function AlphaInput(props: Props & UseControllerProps<FormInput>) {
+  const { control, name, type, size, required, children, ...restProps } = props;
   const {
     field,
     formState: { errors },
@@ -35,16 +32,18 @@ export function AlphaInput(props: Props) {
     name,
     control,
     rules: {
-      required: required,
-      pattern: pattern,
+      required,
     },
   });
 
   return (
     <TextField
-      required={required.value}
-      error={Boolean(errors[name]?.type)}
-      helperText={Boolean(errors[name]?.type) && errors[name]?.message}
+      required={required?.value}
+      error={Boolean(errors[name as keyof FormInput]?.type)}
+      helperText={
+        Boolean(errors[name as keyof FormInput]?.type) &&
+        errors[name as keyof FormInput]?.message
+      }
       size={size}
       type={type}
       {...field}

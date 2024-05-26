@@ -12,7 +12,7 @@ import "./star-war-page.css";
 import { useState } from "react";
 
 export function StarWarPage() {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState<string>("");
   return (
     <div className="star-war-page-container">
       <Typography textAlign="left" variant="h4">

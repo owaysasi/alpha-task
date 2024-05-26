@@ -20,9 +20,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
-  width?: number;
+  width?: number | string;
   height?: number;
 }
 

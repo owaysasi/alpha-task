@@ -28,14 +28,20 @@ import {
   disorderList,
   workspaceOptions,
 } from "../../const/const";
+import { FormInput } from "../../types/types";
 
-interface FormInput {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  disorder: Array<string>;
-  gender: string;
-  workspaces: { value: string }[];
+interface Workspace {
+  value: string;
+}
+
+interface Field {
+  value: Array<number>;
+  onChange: () => void;
+}
+
+interface Item {
+  Id: number;
+  name: string;
 }
 
 export function UserDetailsPage() {
@@ -64,7 +70,10 @@ export function UserDetailsPage() {
     reset(defaultValues);
   };
 
-  const onChangeCheckbox = (Id: string, CallBack: () => void) => {
+  const onChangeCheckbox = (
+    Id: number,
+    CallBack: (values: number[]) => void
+  ) => {
     if (!getValues("disorder").includes(Id)) {
       CallBack([...getValues("disorder"), Id]);
     } else {
@@ -72,7 +81,7 @@ export function UserDetailsPage() {
     }
   };
 
-  const MemoizedCheckbox = (field: object = {}) => {
+  const MemoizedCheckbox = (field: Field) => {
     const memoizedComponent = useMemo(
       () => (
         <Grid
@@ -82,12 +91,11 @@ export function UserDetailsPage() {
           style={{ width: "auto" }}
         >
           <Grid item container alignItems="flex-start">
-            {disorderList.map((item) => (
+            {disorderList.map((item: Item) => (
               <Grid item xs={6} sm={4} md key={item.Id}>
                 <AlphaFormControlLabel
                   control={
                     <Checkbox
-                      // {...field}
                       value={item.Id}
                       onChange={() => onChangeCheckbox(item.Id, field.onChange)}
                     />
@@ -105,23 +113,27 @@ export function UserDetailsPage() {
   };
 
   const formDataFormatter = (data: FormInput) => {
+    console.log(data, "data");
     setFormData("");
-    let formattedData = "";
+    let formattedData: string = "";
     Object.keys(data).forEach((key) => {
       switch (key) {
         case "dateOfBirth":
           formattedData += `${key}: ${data[key].toLocaleString()}, `;
           break;
         case "disorder":
-          formattedData += `${key}: ${data[key].map((item: string) => item)}, `;
+          formattedData += `${key}: ${data[key].map((item: number) => {
+            return item;
+          })}, `;
           break;
         case "workspaces":
           formattedData += `${key}: ${data[key].map(
-            (item: object) => item.value
+            (item: Workspace) => item.value
           )}, `;
           break;
         default:
-          formattedData += `${key}: ${data[key]}, `;
+          console.log(data[key as keyof FormInput], "key");
+          formattedData += `${key}: ${data[key as keyof FormInput]}, `;
           break;
       }
       setFormData(formattedData);
