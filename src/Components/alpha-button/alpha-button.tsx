@@ -1,6 +1,9 @@
 //MUI
-import { Button, buttonClasses } from "@mui/material";
-import { ButtonProps as MuiButtonProps } from "@material-ui/core/Button";
+import {
+  Button,
+  buttonClasses,
+  ButtonProps as MuiButtonProps,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledAlphaButton = styled(Button)<MuiButtonProps>(() => ({
@@ -15,6 +18,6 @@ const StyledAlphaButton = styled(Button)<MuiButtonProps>(() => ({
   },
 }));
 
-export function AlphaButton({ children, ...restProps }: Props) {
+export function AlphaButton({ children, ...restProps }: MuiButtonProps) {
   return <StyledAlphaButton {...restProps}>{children}</StyledAlphaButton>;
 }

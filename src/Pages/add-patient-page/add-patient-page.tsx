@@ -184,7 +184,6 @@ export function UserDetailsPage() {
                 label="First Name"
                 required={true}
                 errorMessage="Please, enter first name"
-                // {...field}
               />
             </Grid>
             <Grid item>
