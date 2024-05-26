@@ -37,9 +37,9 @@ interface Props {
 
 interface Data {
   count: number;
-  next: string | undefined;
-  previous: string | undefined;
-  results: Array<T>;
+  next?: string;
+  previous?: string;
+  results: Array<RowData>;
 }
 
 interface RowData {
@@ -47,13 +47,13 @@ interface RowData {
   name: string;
   height: string;
   eye_color: string;
-  gender: string | undefined;
+  gender?: string;
 }
 
 export function AlphaTable({ searchText }: Props) {
   const headers = ["Name", "Gender", "Height", "Eye color"];
 
-  const [data, setData] = useState<Data>({});
+  const [data, setData] = useState<Data | null>(null);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -98,9 +98,8 @@ export function AlphaTable({ searchText }: Props) {
         </TableHead>
         {!isLoading ? (
           <AlphaTableBody>
-            {data.results.length > 0 ? (
+            {data && data.results.length > 0 ? (
               data.results.map((row: RowData) => {
-                console.log(row, "row");
                 const unique_id = uuid();
                 return (
                   <AlphaTableRow key={unique_id}>
@@ -119,7 +118,7 @@ export function AlphaTable({ searchText }: Props) {
                   </AlphaTableRow>
                 );
               })
-            ) : data.results.length === 0 ? (
+            ) : data && data.results.length === 0 ? (
               <AlphaNoData>No Data To Show</AlphaNoData>
             ) : null}
           </AlphaTableBody>
@@ -129,7 +128,7 @@ export function AlphaTable({ searchText }: Props) {
         <TableFooter>
           <AlphaTableRow>
             <TablePagination
-              count={data.count ?? ROWS_PER_PAGE}
+              count={(data && data.count) ?? ROWS_PER_PAGE}
               rowsPerPage={ROWS_PER_PAGE}
               page={page}
               onPageChange={handleChangePage}

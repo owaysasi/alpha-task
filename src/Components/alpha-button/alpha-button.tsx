@@ -1,20 +1,9 @@
 //MUI
 import { Button, buttonClasses } from "@mui/material";
+import { ButtonProps as MuiButtonProps } from "@material-ui/core/Button";
 import { styled } from "@mui/material/styles";
 
-import { ReactNode } from "react";
-import { Size } from "../../types/types";
-
-interface Props {
-  children: ReactNode;
-  type?: string;
-  size?: Size;
-  variant?: string;
-  disableRipple?: boolean;
-  onClick?: () => void;
-}
-
-const StyledAlphaButton = styled(Button)(() => ({
+const StyledAlphaButton = styled(Button)<MuiButtonProps>(() => ({
   [`&.${buttonClasses.sizeSmall}`]: {
     padding: 0,
     lineHeight: 0,

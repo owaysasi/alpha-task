@@ -1,4 +1,4 @@
-export type Size = "small" | "medium" | undefined;
+export type Size = "small" | "medium";
 
 export type Type = "text" | "outlined" | "contained";
 
