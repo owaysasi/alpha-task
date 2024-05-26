@@ -182,10 +182,8 @@ export function UserDetailsPage() {
                 control={control}
                 size="small"
                 label="First Name"
-                required={{
-                  value: true,
-                  message: "Please, enter first name",
-                }}
+                required={true}
+                errorMessage="Please, enter first name"
                 // {...field}
               />
             </Grid>
@@ -195,7 +193,8 @@ export function UserDetailsPage() {
                 name="lastName"
                 size="small"
                 label="Last Name"
-                required={{ value: true, message: "Please, enter last name" }}
+                required={true}
+                errorMessage="Please, enter last name"
               />
             </Grid>
           </Grid>
@@ -260,7 +259,7 @@ export function UserDetailsPage() {
               control={control}
               type="date"
               label="Date of birth"
-              required={{ value: true }}
+              required={true}
             />
           </Grid>
           <Grid
@@ -305,9 +304,7 @@ export function UserDetailsPage() {
                   size="small"
                   label="Workspace template"
                   style={{ minWidth: 200 }}
-                  required={{
-                    value: true,
-                  }}
+                  required={true}
                 >
                   {workspaceOptions.map((item) => (
                     <MenuItem value={item} key={item}>
