@@ -35,10 +35,25 @@ interface Props {
   searchText?: string;
 }
 
+interface Data {
+  count: number;
+  next: string | undefined;
+  previous: string | undefined;
+  results: Array<T>;
+}
+
+interface RowData {
+  birth_year: string;
+  name: string;
+  height: string;
+  eye_color: string;
+  gender: string | undefined;
+}
+
 export function AlphaTable({ searchText }: Props) {
   const headers = ["Name", "Gender", "Height", "Eye color"];
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Data>({});
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,7 +63,7 @@ export function AlphaTable({ searchText }: Props) {
     getData(1, () => setPage(0));
   }, [searchText]);
 
-  const getData = (pageNumber: number = 1, callBack: () => {}) => {
+  const getData = (pageNumber: number = 1, callBack: () => void) => {
     setIsLoading(true);
     callBack();
     axios
@@ -58,6 +73,7 @@ export function AlphaTable({ searchText }: Props) {
         }`
       )
       .then((res) => {
+        console.log(res.data, "data");
         setData(res.data);
         setIsLoading(false);
       });
@@ -83,7 +99,8 @@ export function AlphaTable({ searchText }: Props) {
         {!isLoading ? (
           <AlphaTableBody>
             {data.results.length > 0 ? (
-              data.results.map((row) => {
+              data.results.map((row: RowData) => {
+                console.log(row, "row");
                 const unique_id = uuid();
                 return (
                   <AlphaTableRow key={unique_id}>

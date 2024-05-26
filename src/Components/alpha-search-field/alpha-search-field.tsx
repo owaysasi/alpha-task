@@ -8,25 +8,27 @@ import _ from "lodash";
 import { DEBOUNCED_PERIOD } from "../../const/const";
 
 interface Props {
-  setSearchText: () => void;
+  setSearchText: (text: string) => void;
 }
 
 export function AlphaSearchField({ setSearchText }: Props) {
-  const onSearchChange = (event) => {
+  const onSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     onSearchDebounced(event.target.value);
   };
 
-  const onSearchDebounced = _.debounce((text) => {
+  const onSearchDebounced = _.debounce((text: string) => {
     setSearchText(text);
   }, DEBOUNCED_PERIOD);
 
   return (
     <Grid container direction="row" alignItems="center" justifyContent="left">
       <Grid item xs={3}>
-        <Typography variant="p">Search by name:</Typography>
+        <Typography>Search by name:</Typography>
       </Grid>
       <Grid item xs={9}>
-        <TextField onChange={onSearchChange} size="small" fullWidth />
+        <TextField onChange={(e) => onSearchChange(e)} size="small" fullWidth />
       </Grid>
     </Grid>
   );
