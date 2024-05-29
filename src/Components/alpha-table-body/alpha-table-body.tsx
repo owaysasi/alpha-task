@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 const StyledAlphaTableBody = styled(TableBody)(() => ({
   [`&.${tableBodyClasses.root}`]: {
     height: "448px",
+    position: "relative",
   },
 }));
 

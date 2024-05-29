@@ -1,5 +1,7 @@
 .no-data {
+  display: flex;
+  align-items: center;
   position: absolute;
-  left: 33%;
-  top: 53%;
+  left: 25%;
+  height: inherit;
 }
