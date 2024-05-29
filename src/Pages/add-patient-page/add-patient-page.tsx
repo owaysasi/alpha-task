@@ -96,6 +96,7 @@ export function UserDetailsPage() {
                 <AlphaFormControlLabel
                   control={
                     <Checkbox
+                      checked={getValues("disorder").includes(item.Id)}
                       value={item.Id}
                       onChange={() => onChangeCheckbox(item.Id, field.onChange)}
                     />
@@ -107,7 +108,7 @@ export function UserDetailsPage() {
           </Grid>
         </Grid>
       ),
-      [getValues("disorder").length, errors]
+      [getValues("disorder").length]
     );
     return memoizedComponent;
   };
@@ -309,16 +310,6 @@ export function UserDetailsPage() {
                     </MenuItem>
                   ))}
                 </AlphaInput>
-                {`workspaces` in errors && (
-                  <Typography
-                    position="absolute"
-                    marginLeft={1.5}
-                    color="error"
-                    fontSize={12}
-                  >
-                    Please, select an option
-                  </Typography>
-                )}
               </Grid>
             ))}
             <Grid item>
@@ -331,6 +322,17 @@ export function UserDetailsPage() {
                 Add workspace
               </AlphaButton>
             </Grid>
+            {`workspaces` in errors && (
+              <Typography
+                position="absolute"
+                marginLeft={3.5}
+                marginTop={10}
+                color="error"
+                fontSize={12}
+              >
+                Please, select an option
+              </Typography>
+            )}
           </Grid>
           <Grid item container>
             <Grid item xs={4} sm={2}>
